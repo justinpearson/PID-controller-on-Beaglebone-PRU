@@ -1,0 +1,8 @@
+#!/bin/bash
+
+echo "Compiling the overlay from .dts to .dtbo"
+
+#dtc -O dtb -o jppprugpio-00A0.dtbo -b 0 -@ EBB-PRU-Example-w-extra-gpio.dts
+#dtc -O dtb -o bone_eqep1-00A0.dtbo -b 0 -@ bone_eqep1.dts
+
+dtc -O dtb -o bone_pwm_P8_34-00A0.dtbo -b 0 -@ bone_pwm_P8_34-00A0.dts

@@ -1,0 +1,262 @@
+#include <stdio.h>
+#include <errno.h> // for strerror(errno)
+// #include <fcntl.h> // flags for 'open', eg O_WRONLY, O_SYNC, etc
+#include <string.h> // for strerror also?
+#include <math.h> // fabs, M_PI
+#include <stdlib.h> // exit,  EXIT_FAILURE
+#include <unistd.h> // usleep, pread
+
+
+#include "util-jpp.h"
+#include "bb-simple-sysfs-c-lib.h"
+
+#define SLEEP_TYPE (0) // 0=sleep for dt, 1=sleep til next iter, 2=sleep for half dt (hack, sry)
+
+#define REF_TYPE (2)   // 0=sin 1=square 2=triangle
+#define REF_FREQ (0.5); // // Hz, controls how fast the reference angle changes
+
+const int MAX_ITERS = 2500;
+
+#define USEC_PER_SEC (1E6)
+
+const double Ts = 0.005; // sec, time per iteration
+///////
+// From matlab pidtuner
+const double kp = -0.0304;
+const double ki = -0.106;
+const double kd = -0.000873;
+const double Tf = 0.00405; // sec, time const of 1st-order derivative filter 
+///////////
+
+////////////////////////////////////////
+
+double CLAMP(double x, double M) {
+  if( x>M ) x=M;
+  if( x<-M ) x=-M;
+  return x;
+}
+
+////////////////////////////////////////////////////
+double reference( double t ) {
+  const double freq = REF_FREQ; 
+  double r = 0;
+#if REF_TYPE == 0 // sine wave
+  r = 180 * sin(2.0 * M_PI * freq * t); // deg
+#elif REF_TYPE == 1 // square wave
+  r = 180 * sin(2.0 * M_PI * freq * t); // deg
+  if(r>0) r=180; else r=-180; // make square wave.
+#elif REF_TYPE == 2 // triangle wave
+  // https://en.wikipedia.org/wiki/Triangle_wave
+  //    4*a/p*(fabs(fmod(x-p/4,p)-p/2) - p/4)
+  double a = 180; // amplitude (deg)
+  double p = 1/freq; // period (s?)
+  //    ref[i] =     4*a/p*(fabs(fmod(cputime[i]-p/4,p)-p/2) - p/4);
+  //  http://stackoverflow.com/questions/11980292/how-to-wrap-around-a-range
+  // arg, don't use fmod because it goes up beyond 180 deg to 360 on the first cycle.
+  // instead of fmod(x,y) use x-y*floor(x/y).
+  r =        4*a/p*(fabs(  (t-p/4)-p*floor((t-p/4)/p)  -p/2) - p/4);
+#endif
+
+  return r;
+}
+
+
+void printLocalTime(FILE* fp) {
+  // https://www.tutorialspoint.com/c_standard_library/c_function_localtime.htm
+  time_t rawtime;
+  time( &rawtime );
+  struct tm *info;
+  info = localtime( &rawtime );
+  if( fp == 0 ) {
+    printf("Current local time and date: %s", asctime(info));
+  } else {
+    fprintf(fp,"Current local time and date: %s", asctime(info));
+  }
+
+}
+
+
+/////////////////////////////////////////////
+
+double pid_iir( double ek, double ekm1, double ekm2, double vkm1, double vkm2 ) {      
+  // u(k) = 1/f * ( a*e(k-2) + b*e(k-1) + c*e(k) - (d*u(k-2) + e*u(k-1)) )
+  const double a = kd + kp*Tf - kp*Ts - ki*Tf*Ts + ki*Ts*Ts;
+  const double b = -2*kd - 2*kp*Tf + kp*Ts + ki*Tf*Ts;
+  const double c = kd + kp*Tf;
+  const double d = Tf-Ts;
+  const double e = -2*Tf + Ts;
+  const double f = Tf;
+  return 1/f * (a*ekm2 + b*ekm1 + c*ek - (d*vkm2+e*vkm1));
+}
+
+
+int main(int argc, char* argv[] ) {
+
+  printf("Running test: %s\n",__FUNCTION__);
+
+  setup();
+  unstby();
+  run();
+  cw();
+
+  //  printf("duration: %lf kp: %lf ki: %lf kd: %lf\n",duration, kp, ki, kd);
+
+  /* const double dt = 0.005; // sec, time per iteration */
+  /* const double max_time = duration; // sec, max time of sim */
+  /* const int num_iters = max_time / dt; */
+  /* const int N = num_iters; */
+  /* const double freq = 1; // Hz, controls how fast the reference angle changes */
+
+  // Warning: These are all doubles because if you printf or fprintf an int using %lf it produces garbage,  ugh.
+  // http://stackoverflow.com/questions/16607628/printing-int-as-float-in-c
+
+
+
+  double step[MAX_ITERS]       ; for(int i=0;i<MAX_ITERS;i++) step[i]=0;
+  double cputime[MAX_ITERS]    ; for(int i=0;i<MAX_ITERS;i++) cputime[i]=0;
+  double cputimediff[MAX_ITERS]; for(int i=0;i<MAX_ITERS;i++) cputimediff[i]=0;
+  double angle[MAX_ITERS]      ; for(int i=0;i<MAX_ITERS;i++) angle[i]=0;
+  double ref[MAX_ITERS]        ; for(int i=0;i<MAX_ITERS;i++) ref[i]=0;
+  double error[MAX_ITERS]      ; for(int i=0;i<MAX_ITERS;i++) error[i]=0;
+  double ierror[MAX_ITERS]     ; for(int i=0;i<MAX_ITERS;i++) ierror[i]=0;
+  double derror[MAX_ITERS]     ; for(int i=0;i<MAX_ITERS;i++) derror[i]=0;
+  double pterm[MAX_ITERS]      ; for(int i=0;i<MAX_ITERS;i++) pterm[i]=0;
+  double iterm[MAX_ITERS]      ; for(int i=0;i<MAX_ITERS;i++) iterm[i]=0;
+  double dterm[MAX_ITERS]      ; for(int i=0;i<MAX_ITERS;i++) dterm[i]=0;
+  double v[MAX_ITERS]          ; for(int i=0;i<MAX_ITERS;i++) v[i]=0;
+
+  // PID IIR filter
+  double vk = 0;
+  double vkm1 = 0;
+  double vkm2 = 0;
+  double ek = 0;
+  double ekm1 = 0;
+  double ekm2 = 0;
+
+
+  for( int i=0; i<MAX_ITERS; i++ ) {
+
+    toc(&(cputime[i]), &(cputimediff[i]) );
+    step[i]    	  = i;
+    angle[i]   	  = shaft_angle_deg();
+    ref[i] = reference(cputime[i]);
+    error[i] = ref[i] - angle[i];
+
+    ek = error[i];
+    vk = pid_iir( ek, ekm1, ekm2, vkm1, vkm2 );
+
+    v[i] = CLAMP(vk,MAX_VOLTAGE);
+
+    voltage(v[i]);
+
+    vkm2 = vkm1;
+    vkm1 = vk;
+    ekm2 = ekm1;
+    ekm1 = ek;
+
+    ///////////////////////////////////////////////
+    // Sleep until next iteration
+    ///////////////////////////////////////////////
+
+#if SLEEP_TYPE == 0
+    usleep(Ts*USEC_PER_SEC);
+#elif SLEEP_TYPE == 1
+    double sec_til_next = sec_til_next_timestep(Ts);
+    //    fprintf(flog,"sleeping for %lf secs! (til next ts)!\n",sec_til_next);
+    // sleep until timestep i+1 (must call toc() once at beginning to get a ref time)
+    usleep(sec_til_next*USEC_PER_SEC);
+#elif SLEEP_TYPE == 2
+    // ugh, like don't sleep if you've been preempted but don't fall behind either...
+        usleep(Ts/4*USEC_PER_SEC);
+#endif
+
+
+  }
+
+  stop();
+
+  shutdown();
+
+  printf("Test complete: %s\n",__FUNCTION__);
+
+  const char* suff = argc > 1 ? argv[1] : "";
+  char out_name[100];
+  snprintf(out_name, sizeof out_name, "%s%s%s", "pid-iir-sysfs",suff,".txt");
+
+  printf("Writing data to %s...\n",out_name);
+
+  // files to hold results
+  FILE* fp;
+  /* FILE* flog; */
+
+    fp = fopen(out_name, "w");
+    /* flog = fopen("runlog.txt","w"); */
+
+    // Configure the data file and log file to be "fully buffered",
+    // meaning that they won't write to disk until explicitly told (or closed).
+    // https://www.chemie.fu-berlin.de/chemnet/use/info/libc/libc_7.html#SEC118
+    /* #define fp_buf_size 999999 */
+    /* #define flog_buf_size  999999 */
+    /* char fp_buf[fp_buf_size] = {}; */
+    /* char flog_buf[flog_buf_size] = {}; */
+    /* int retval = 0; */
+    /* if( (retval = setvbuf( fp, fp_buf, _IOFBF, fp_buf_size )) != 0 ) { */
+    /*   printf("BAD: setvbuf returned %d\n",retval); */
+    /* } */
+    /* if( (retval = setvbuf( flog, flog_buf, _IOFBF, flog_buf_size )) != 0 ) { */
+    /*   printf("BAD: setvbuf returned %d\n",retval); */
+    /* } */
+    /* char stdout_buf[fp_buf_size] = {}; */
+    /* if((retval=setvbuf(stdout, stdout_buf, _IOFBF, fp_buf_size))!=0) { */
+    /*   printf("bad: setvbuf returned %d\n",retval); */
+    /*   return EXIT_FAILURE; */
+    /* } */
+    /* char stderr_buf[fp_buf_size] = {}; */
+    /* if((retval=setvbuf(stderr, stderr_buf, _IOFBF, fp_buf_size))!=0) { */
+    /*   printf("bad: setvbuf returned %d\n",retval); */
+    /*   return EXIT_FAILURE; */
+    /* } */
+
+    // Header row
+    fprintf(fp,"%11s %11s %11s %11s %11s %11s %11s %11s %11s %11s %11s %11s\n",
+	    "step",
+	    "cputime",
+	    "cputimediff",
+	    "angle", 
+	    "ref", 
+	    "error",
+	    "ierror",
+	    "derror",  
+	    "pterm",
+	    "iterm",
+	    "dterm",
+	    "v");
+
+  // Write data
+  for( int i=0; i<MAX_ITERS; i++ ) {
+
+    fprintf(fp,"%11lf %11lf %11lf %11lf %11lf %11lf %11lf %11lf %11lf %11lf %11lf %11lf\n",
+	    step[i],
+	    cputime[i],
+	    cputimediff[i],
+	    angle[i], 
+	    ref[i], 
+	    error[i],
+	    ierror[i],
+	    derror[i],  
+	    pterm[i],
+	    iterm[i],
+	    dterm[i],
+	    v[i]);
+
+  }
+
+  fclose(fp);
+
+
+  printf("%s %s %d: All done! Bye bye.\n",__FILE__,__FUNCTION__,__LINE__);
+
+
+  return 0;
+}
+

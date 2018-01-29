@@ -1,0 +1,427 @@
+#include <stdio.h>
+#include <errno.h> // for strerror(errno)
+// #include <fcntl.h> // flags for 'open', eg O_WRONLY, O_SYNC, etc
+#include <string.h> // for strerror also?
+#include <math.h> // fabs, M_PI
+#include <stdlib.h> // exit,  EXIT_FAILURE
+#include <unistd.h> // usleep, pread
+
+
+#include "util-jpp.h"
+// #include "bb-simple-sysfs-c-lib.h" 
+#include "jpp-pru-lib.h"
+
+#define MAX_VOLTAGE 5 // Volts
+
+
+//#define FAKE_OS_PREEMPTION
+//#define MAX_SLEEP_SEC (0.005)  // for fake preemption
+// #define USEC_PER_SEC (1E6)
+
+#define SLEEP_TYPE (0) // 0=sleep for dt, 1=sleep til next iter, 2=sleep for half dt (hack, sry)
+
+#define ANGLE_PREDICTION_MODEL (0) // 0=constant 1=linear
+#define REF_TYPE (2)   // 0=sin 1=square 2=triangle
+#define REF_FREQ (0.5); // // Hz, controls how fast the reference angle changes
+const int T = 10; // forward horizon
+
+////////////////////////////////////////
+
+double CLAMP(double x, double M) {
+  if( x>M ) x=M;
+  if( x<-M ) x=-M;
+  return x;
+}
+
+////////////////////////////////////////////////////
+double reference( double t ) {
+  const double freq = REF_FREQ; 
+  double r = 0;
+#if REF_TYPE == 0 // sine wave
+  r = 180 * sin(2.0 * M_PI * freq * t); // deg
+#elif REF_TYPE == 1 // square wave
+  r = 180 * sin(2.0 * M_PI * freq * t); // deg
+  if(r>0) r=180; else r=-180; // make square wave.
+#elif REF_TYPE == 2 // triangle wave
+  // https://en.wikipedia.org/wiki/Triangle_wave
+  //    4*a/p*(fabs(fmod(x-p/4,p)-p/2) - p/4)
+  double a = 180; // amplitude (deg)
+  double p = 1/freq; // period (s?)
+  //    ref[i] =     4*a/p*(fabs(fmod(cputime[i]-p/4,p)-p/2) - p/4);
+  //  http://stackoverflow.com/questions/11980292/how-to-wrap-around-a-range
+  // arg, don't use fmod because it goes up beyond 180 deg to 360 on the first cycle.
+  // instead of fmod(x,y) use x-y*floor(x/y).
+  r =        4*a/p*(fabs(  (t-p/4)-p*floor((t-p/4)/p)  -p/2) - p/4);
+#endif
+
+  return r;
+}
+
+
+void printLocalTime(FILE* fp) {
+  // https://www.tutorialspoint.com/c_standard_library/c_function_localtime.htm
+  time_t rawtime;
+  time( &rawtime );
+  struct tm *info;
+  info = localtime( &rawtime );
+  if( fp == 0 ) {
+    printf("Current local time and date: %s", asctime(info));
+  } else {
+    fprintf(fp,"Current local time and date: %s", asctime(info));
+  }
+
+}
+
+int main ( int argc, char *argv[] ) {
+
+  printLocalTime(0);
+
+  printf("USING PRU!\n");
+
+  printf("%s %s (%d): HEY IDIOT, sysfs pwm goes out P9_34 but PRU pwm goes out P8_27. \n"
+	 "Make sure your wiring reflects this!\n",__FILE__,__FUNCTION__,__LINE__);
+
+  // Input parse.
+  //  double duration     = argc>1 ? atof(argv[1]) :  1; // duration, sec
+  /* const double kp           = argc>2 ? atof(argv[2]) : -0.082849; // kp */
+  /* const double ki           = argc>3 ? atof(argv[3]) : -0.055907; // ki */
+  /* const double kd           = argc>4 ? atof(argv[4]) : -0.000645; // kd */
+  const char* out_name      = argc>1 ? argv[1]  : "pid-fwd.txt";    // output file name
+  const char* pru_out_name  = argc>2 ? argv[2]  : "pru-data.txt";    // output file name of pru data
+  const char* flogname = argc>3 ? argv[3] : "log.txt"; 
+
+  const double kp       = -0.082849; // kp
+  const double ki           =  -0.055907; // ki
+  const double kd           =  -0.000645; // kd
+  /* const char* out_name      = "pid-fwd.txt";        // output file name */
+  /* const char* pru_out_name  = "pru-data.txt";        // output file name of pru data */
+  /* const char* flogname = "log.txt"; */
+
+
+
+
+  ////////////////////////////////////////////////////////////////////////////
+  // files to hold results
+  FILE* fp;
+  fp = fopen(out_name, "w");
+
+  FILE* flog; 
+
+  printf("Log file: %s\n",flogname);
+  flog = fopen(flogname,"w");
+
+  // Configure the data file and log file to be "fully buffered",
+  // meaning that they won't write to disk until explicitly told (or closed).
+  // https://www.chemie.fu-berlin.de/chemnet/use/info/libc/libc_7.html#SEC118
+#define fp_buf_size 999999
+#define flog_buf_size  999999
+  char fp_buf[fp_buf_size] = {};
+  char flog_buf[flog_buf_size] = {};
+  int retval = 0;
+  if( (retval = setvbuf( fp, fp_buf, _IOFBF, fp_buf_size )) != 0 ) {
+    printf("BAD: setvbuf returned %d\n",retval);
+  }
+  if( (retval = setvbuf( flog, flog_buf, _IOFBF, flog_buf_size )) != 0 ) {
+    printf("BAD: setvbuf returned %d\n",retval);
+  }
+  char stdout_buf[fp_buf_size] = {};
+  if((retval=setvbuf(stdout, stdout_buf, _IOFBF, fp_buf_size))!=0) {
+    printf("bad: setvbuf returned %d\n",retval);
+    return EXIT_FAILURE;
+  }
+  char stderr_buf[fp_buf_size] = {};
+  if((retval=setvbuf(stderr, stderr_buf, _IOFBF, fp_buf_size))!=0) {
+    printf("bad: setvbuf returned %d\n",retval);
+    return EXIT_FAILURE;
+  }
+
+  printLocalTime(flog);
+
+
+  const double DT = 0.005; // sec, time per iteration
+
+  const int MAX_ITERS = 1000;
+
+  // pseudo-code:
+
+  // init snprev = 0;
+  // init intterm = 0;
+  // for MAX_ITERS times,
+  //   get PRU data. sn = sn of last dpkt.
+  //   from snprev+1 to sn,
+  //     add up the error that you missed to the intterm.
+  //   snprev = sn.
+  //   make a fwd-horizon of voltages to apply at sn+1, sn+2, ..., sn+T.
+  //   init tmp_intterm = intterm
+  //   from j=1 to T elems of your act sched,
+  //     e = ref[sn+j] - ang
+  //     v[sn+j] = kp*e + tmp_intterm + ediff * kp / dt
+
+  DataBuffer db_buffer    [MAX_ITERS];
+  CommandBuffer cb_buffer [MAX_ITERS];
+  CommandBuffer cb_rx     [MAX_ITERS];
+
+  for(int i=0;i<MAX_ITERS;i++)init_data_buf(db_buffer[i]);
+  for(int i=0;i<MAX_ITERS;i++)init_cmd_buf(cb_buffer[i]);
+  for(int i=0;i<MAX_ITERS;i++)init_cmd_buf(cb_rx[i]);
+
+
+  double cputime[MAX_ITERS]    ; for(int i=0;i<MAX_ITERS;i++) cputime[i]=0;
+  double cputimediff[MAX_ITERS]; for(int i=0;i<MAX_ITERS;i++) cputimediff[i]=0;
+  double angles[MAX_ITERS]     ; for(int i=0;i<MAX_ITERS;i++) angles[i]=0;
+  double voltages[MAX_ITERS]   ; for(int i=0;i<MAX_ITERS;i++) voltages[i]=0;
+  double refs[MAX_ITERS]       ; for(int i=0;i<MAX_ITERS;i++) refs[i]=0;
+  double steps[MAX_ITERS]       ; for(int i=0;i<MAX_ITERS;i++) steps[i]=0;
+  double sns[MAX_ITERS]       ; for(int i=0;i<MAX_ITERS;i++) sns[i]=0;
+
+
+  // Warning: These are all doubles because if you printf or fprintf an int using %lf it produces garbage,  ugh.
+  // http://stackoverflow.com/questions/16607628/printing-int-as-float-in-c
+
+  double imax = 2; // max volts allowed of integral term. (volts)
+
+  // Try to get cputime to line up with PRU time by initializing it here.
+  toc(&(cputime[0]), &(cputimediff[0]) ); // this sets cputime[0]=0 and counts up from there.
+  printf("Starting PRU...\n");
+  start_pru();
+
+  printf("kp: %lf ki: %lf kd: %lf outfile: %s pru outfile: %s log: %s\n",
+	 kp, ki, kd,out_name,pru_out_name,flogname);
+
+  unsigned int snprev = 0;
+  double iterm = 0;
+  ///////////////////////////////////////////////
+  // LOOP
+  ///////////////////////////////////////////////
+  for( int i=0; i<MAX_ITERS; i++ ) {
+    fprintf(flog,"\n== Iter %3d ",i);
+    steps[i] = i;
+
+    // get time
+    toc(&(cputime[i]), &(cputimediff[i]) );
+
+    // read sensors
+    get_data_cmd_bufs( &(db_buffer[i]), &(cb_rx[i]) ); 
+    unsigned int sn = db_buffer[i][PKTS_PER_DATA_BUFFER-1].sample_num; 
+    sns[i] = sn;
+    fprintf(flog,"sn=%4d. ",sn);
+    
+    // catch up on missed data packets.
+    if( sn==snprev ) {
+      // Else, we've read the same db twice. Chill out until the next timestep, hotshot.
+      fprintf(flog,"--> iter %4d : sn=%4d same snprev=%4d : slow down hotshot!\n",i,sn,snprev);
+      goto WAIT;
+    }
+    else if( sn<snprev ) { 
+      fprintf(flog,"!!!!--> iter %d: sn=%d < snprev=%d PRU went crazy?? "
+	      "THIS SHOULD NEVER HAPPEN, QUITTING...\n",
+	      i,sn,snprev);
+      goto BAIL;
+    } 
+    else if( sn > snprev ) {
+      // Some new data packets arrived.
+      fprintf(flog,"%3d new pkts.",sn-snprev);
+      for( int j=0; j<sn-snprev; j++ ) fprintf(flog,"-");
+
+      // Some handy values.
+      double angle      = 180.0 / M_PI *  eqep_to_angle( db_buffer[i][PKTS_PER_DATA_BUFFER-1].eqep );
+      angles[i] = angle;
+      double prev_angle = 180.0 / M_PI *  eqep_to_angle( db_buffer[i][PKTS_PER_DATA_BUFFER-2].eqep );
+      refs[i] = reference(DT*sn);
+      double error      = refs[i]- angle;
+      double prev_error = reference(DT*(sn-1)) - prev_angle;
+      voltages[i] = gpio_duty_to_motor_voltage_cmd( 
+						   db_buffer[i][PKTS_PER_DATA_BUFFER-1].gpio,
+						   db_buffer[i][PKTS_PER_DATA_BUFFER-1].duty
+						    );
+
+
+      // Catch up the integral term by moving from last (most recent) back, 
+      // until either hit beginning of db or snprev.
+      for( int j=PKTS_PER_DATA_BUFFER-1; j>=0; j-- ) {
+	int sn_pkt = db_buffer[i][j].sample_num;
+	if(  sn_pkt <= snprev ) break;
+
+	// Catch up the integral term since last time.
+
+	if( iterm < imax && iterm > -imax ) { // anti-windup
+	  iterm += ki * (
+			 reference(DT*sn_pkt)
+			 -
+			 180.0/M_PI*eqep_to_angle( db_buffer[i][j].eqep )
+			 ) * DT;
+	}
+      } // import data from db
+      // Now iterm contains sums of errors up to sn.      
+      
+      // The actuation schedule:
+      // v[sn+1] = kp*e[sn+0] + iterm + kd*(e[sn+0]-e[sn+0-1])/DT; iterm += ki*e[sn+1]*DT;
+      // v[sn+2] = kp*e[sn+1] + iterm + kd*(e[sn+1]-e[sn+1-1])/DT; iterm += ki*e[sn+2]*DT;
+      // v[sn+3] = kp*e[sn+2] + iterm + kd*(e[sn+2]-e[sn+2-1])/DT; iterm += ki*e[sn+3]*DT;
+      // v[sn+4] = kp*e[sn+3] + iterm + kd*(e[sn+3]-e[sn+3-1])/DT; iterm += ki*e[sn+4]*DT;
+      // ...
+
+      // Same as:
+      // eprev = (computed above)
+      // e = ref[sn+0]-a[sn+0]; v[sn+1] = kp*e + iterm + kd*(e-eprev)/DT; iterm += ki*e*DT; eprev = e;
+      // e = ref[sn+1]-a[sn+1]; v[sn+2] = kp*e + iterm + kd*(e-eprev)/DT; iterm += ki*e*DT; eprev = e;
+      // e = ref[sn+2]-a[sn+2]; v[sn+3] = kp*e + iterm + kd*(e-eprev)/DT; iterm += ki*e*DT; eprev = e;
+      // e = ref[sn+3]-a[sn+3]; v[sn+4] = kp*e + iterm + kd*(e-eprev)/DT; iterm += ki*e*DT; eprev = e;
+      
+      // Same as:
+      // eprev = (computed above)
+      // for j=0; j<T; j++
+      //   e = reference(sn+j)-angle(sn+j); 
+      //   v[sn+1+j] = kp*e + iterm + kd*(e-eprev)/DT; 
+      //   iterm += ki*e*DT; 
+      //   eprev = e;
+      
+      // Same as:
+      double tmp_iterm = iterm; // don't screw up the real integral of the error on our future projection.
+      double eprev = prev_error;
+      double da = angle-prev_angle;
+      double v[PKTS_PER_CMD_BUFFER] = {0};
+      for( int j=0; j<T; j++ ) { // (Apply v[0] at sn+1.)
+	//	double e = reference(DT*(sn+j))-(angle+da*j);  // linear extrapolation of angle.
+	double e = reference(DT*(sn+j))-(angle);  // constnat extrapolation of angle.
+	v[j] = kp*e + tmp_iterm + kd*(e-eprev)/DT; 
+	v[j] = -1*CLAMP(v[j],MAX_VOLTAGE); // DARN: PRU wired backwards from sysfs; minus sign needed.
+	tmp_iterm += ki*e*DT;  
+	if( tmp_iterm > imax || tmp_iterm < -imax ) { // windup protection
+	  tmp_iterm -= ki*e*DT;  // undo 
+	  // Careful! This way allows it to un-stick itself. Not so if you conditionally +=.
+	}
+	eprev = e;
+      }
+
+      // Send voltage sequence to PRU, starting at sequence num sn+1. 
+      motor_voltage_schedule_to_cmd_buf(v,
+					PKTS_PER_CMD_BUFFER,
+					sn+1,
+					&(cb_buffer[i]) );
+      set_cmd_buf( cb_buffer[i] );
+
+      snprev = sn; // remember for next time, so we can fast-fwd int of err
+
+    } // If sn > snprev
+    else {
+      printf("Have no idea how it's possible to get here!!\n");
+      goto BAIL;
+    }
+
+
+    ///////////////////////////////////////////////
+    // Sleep until next iteration
+    ///////////////////////////////////////////////
+
+  WAIT:
+
+#if SLEEP_TYPE == 0
+    usleep(DT*USEC_PER_SEC);
+#elif SLEEP_TYPE == 1
+    double sec_til_next = sec_til_next_timestep(DT);
+    fprintf(flog,"sleeping for %lf secs! (til next ts)!\n",sec_til_next);
+    // sleep until timestep i+1 (must call toc() once at beginning to get a ref time)
+    usleep(sec_til_next*USEC_PER_SEC);
+#elif SLEEP_TYPE == 2
+    // ugh, like don't sleep if you've been preempted but don't fall behind either...
+        usleep(DT/4*USEC_PER_SEC);
+#endif
+
+
+
+  }  // END OF MAIN LOOP
+
+
+  ///////////////////////////////////////////////
+  // Turn off motor
+  ///////////////////////////////////////////////
+
+ BAIL:
+
+
+  send_single_voltage(0);
+
+  printf("%s %s (%d): Stopped hw.\n",__FILE__,__FUNCTION__,__LINE__);
+
+
+  ///////////////////////////////////////////////
+  // Write data to file 
+  ///////////////////////////////////////////////
+
+
+
+  printf("Writing data to %s...\n",out_name);
+
+
+  // Header row
+  fprintf(fp,"%11s %11s %11s %11s %11s %11s %11s ",
+  	  "step",
+  	  "sn",
+  	  "cputime",
+  	  "cputimediff",
+  	  "angle",
+  	  "ref",
+  	  "v"
+  	  );
+
+  /* for(int j=0;j<T;j++) { */
+  /*   fprintf(fp,"v_future_%01d ",j); */
+  /* } */
+
+
+  fprintf(fp,"\n");
+
+
+
+  // Write data
+  for( int i=0; i<MAX_ITERS; i++ ) {
+
+    fprintf(fp,"%11lf %11lf %11lf %11lf %11lf %11lf %11lf ",
+  	    steps[i],
+  	    sns[i],
+  	    cputime[i],
+  	    cputimediff[i],
+  	    angles[i],
+  	    refs[i],
+  	    voltages[i]
+  	    );
+
+  /*   for(int j=0;j<T;j++) { */
+  /*     fprintf(fp,"%11lf ",v_future[i][j]); */
+  /*   } */
+
+    fprintf(fp,"\n");
+  }
+
+
+
+  fclose(fp);
+
+
+  fp = fopen(pru_out_name, "w");
+  printf("pru data to %s...\n",pru_out_name);
+
+  // Print data buffer header
+  fprintf_data_buf_header( fp ); // databuffer
+  fprintf_cmd_buf_header_prefix( fp, "rx" ); // cb_rx
+  fprintf_cmd_buf_header_prefix( fp, "tx" ); // cb_buffer
+  fprintf(fp,"\n");
+  // Print data buffer:
+  for( int tstep=0; tstep<MAX_ITERS; tstep++ ) {
+    fprintf_data_buf( fp, db_buffer[tstep] );
+    fprintf_cmd_buf(fp, cb_rx[tstep] );
+    fprintf_cmd_buf(fp, cb_buffer[tstep] );
+    fprintf(fp,"\n");
+  }
+  fclose(fp);
+
+
+  fclose(flog);
+
+
+  printf("%s %s (%d): Bye!\n",__FILE__,__FUNCTION__,__LINE__);
+
+  return 0;
+}
+

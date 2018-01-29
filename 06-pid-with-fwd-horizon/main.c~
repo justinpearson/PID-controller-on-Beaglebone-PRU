@@ -1,0 +1,81 @@
+#include <stdio.h> // atof
+#include <stdlib.h> // atof
+#include <string.h> // strcmp
+// http://stackoverflow.com/questions/20787235/atof-is-returning-ambiguous-value
+
+// these tests use the bb-simple-sysfs-c-lib
+extern void test_eqep() ;
+extern void test_voltage_sine() ;
+extern void test_p ( double kp ) ;
+extern int test_pid ( double duration, double kp, double ki, double kd, char* out_name ) ;
+extern int test_sysid (char* input_type, double duration, double freq0, double freq1, char* out_name );
+
+
+// these tests don't use the lib; I built them gradually as I
+// developed the lib; they probably won't work with the library, but they
+// are good documentation of what I did.
+extern void test_eqep_1() ;
+extern void test_eqep_2() ;
+extern void test_motor_dir_pin() ;
+extern void test_motor_dir_pin2() ;
+extern void test_stby_pin() ;
+extern void test_rawduty() ;
+extern void test_rawduty2() ;
+extern void test_duty() ;
+extern void test_duty_sine() ;
+
+
+int main ( int argc, char *argv[] ) {
+
+  char* s = "booger";
+  if( argc>1 ) s = argv[1];
+
+
+  if( strcmp(s,"eqep")==0 ) {
+    // EQEP test////////////////////////
+    test_eqep();  
+  } 
+
+  else if( strcmp(s,"sine")==0 ) {
+    // Voltage sine test////////////////////////
+    test_voltage_sine(); 
+  } 
+
+  else if( strcmp(s,"pid")==0 ) {
+    // PID test////////////////////////
+    if( argc <= 6 ) {
+      printf("%s (%d): Was expecting a bunch of args.\n",__FUNCTION__,__LINE__);
+      exit(EXIT_FAILURE);
+    } else {
+      test_pid( 
+	       atof(argv[2]), // duration, sec
+	       atof(argv[3]), // kp
+	       atof(argv[4]), // ki
+	       atof(argv[5]), // kd
+	       argv[6]        // output file name
+		);
+    }
+  } 
+
+  else if( strcmp(s,"sysid")==0 ) {
+    // Sysid test////////////////////////
+    if( argc <= 6 ) {
+      printf("%s (%d): Was expecting a bunch of args.\n",__FUNCTION__,__LINE__);
+      exit(EXIT_FAILURE);
+    } else {
+      test_sysid(
+		 argv[2],       // chirp or square_chirp
+		 atof(argv[3]), // duration  (s)
+		 atof(argv[4]), // initial freq, hz
+		 atof(argv[5]), // final freq, hz
+		 argv[6]        // output file name
+		 );
+    }
+  }
+
+  else printf("%s (%d): Um, you gave %s: not sure what function you wanted me to execute!\n",
+	      __FUNCTION__,__LINE__,s);
+
+
+
+}

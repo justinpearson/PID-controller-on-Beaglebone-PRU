@@ -1,0 +1,939 @@
+Current local time and date: Tue Mar 14 18:19:30 2017
+
+== Iter   0 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------sn= 200. sleeping for 0.003944 secs! (til next ts)!
+
+== Iter   1 -sn= 201. sleeping for 0.003770 secs! (til next ts)!
+
+== Iter   2 -sn= 202. sleeping for 0.003766 secs! (til next ts)!
+
+== Iter   3 -sn= 203. sleeping for 0.003813 secs! (til next ts)!
+
+== Iter   4 -sn= 204. sleeping for 0.003777 secs! (til next ts)!
+
+== Iter   5 -sn= 205. sleeping for 0.003872 secs! (til next ts)!
+
+== Iter   6 -sn= 206. sleeping for 0.003856 secs! (til next ts)!
+
+== Iter   7 -sn= 207. sleeping for 0.003743 secs! (til next ts)!
+
+== Iter   8 -sn= 208. sleeping for 0.003810 secs! (til next ts)!
+
+== Iter   9 -sn= 209. sleeping for 0.003699 secs! (til next ts)!
+
+== Iter  10 -sn= 210. sleeping for 0.001299 secs! (til next ts)!
+
+== Iter  11 -sn= 211. sleeping for 0.003633 secs! (til next ts)!
+
+== Iter  12 -sn= 212. sleeping for 0.003711 secs! (til next ts)!
+
+== Iter  13 -sn= 213. sleeping for 0.003660 secs! (til next ts)!
+
+== Iter  14 -sn= 214. sleeping for 0.003663 secs! (til next ts)!
+
+== Iter  15 -sn= 215. sleeping for 0.003759 secs! (til next ts)!
+
+== Iter  16 -sn= 216. sleeping for 0.003628 secs! (til next ts)!
+
+== Iter  17 -sn= 217. sleeping for 0.003749 secs! (til next ts)!
+
+== Iter  18 -sn= 218. sleeping for 0.003611 secs! (til next ts)!
+
+== Iter  19 -sn= 219. sleeping for 0.003735 secs! (til next ts)!
+
+== Iter  20 -sn= 220. sleeping for 0.003626 secs! (til next ts)!
+
+== Iter  21 -sn= 221. sleeping for 0.003784 secs! (til next ts)!
+
+== Iter  22 -sn= 222. sleeping for 0.003658 secs! (til next ts)!
+
+== Iter  23 -sn= 223. sleeping for 0.003712 secs! (til next ts)!
+
+== Iter  24 -sn= 224. sleeping for 0.003773 secs! (til next ts)!
+
+== Iter  25 -sn= 225. sleeping for 0.003685 secs! (til next ts)!
+
+== Iter  26 -sn= 226. sleeping for 0.003706 secs! (til next ts)!
+
+== Iter  27 -sn= 227. sleeping for 0.003660 secs! (til next ts)!
+
+== Iter  28 -sn= 228. sleeping for 0.003693 secs! (til next ts)!
+
+== Iter  29 -sn= 229. sleeping for 0.003688 secs! (til next ts)!
+
+== Iter  30 -sn= 230. sleeping for 0.003680 secs! (til next ts)!
+
+== Iter  31 -sn= 231. sleeping for 0.003727 secs! (til next ts)!
+
+== Iter  32 -sn= 232. sleeping for 0.003629 secs! (til next ts)!
+
+== Iter  33 -sn= 233. sleeping for 0.003697 secs! (til next ts)!
+
+== Iter  34 -sn= 234. sleeping for 0.003655 secs! (til next ts)!
+
+== Iter  35 -sn= 235. sleeping for 0.003713 secs! (til next ts)!
+
+== Iter  36 -sn= 236. sleeping for 0.003499 secs! (til next ts)!
+
+== Iter  37 -sn= 237. sleeping for 0.003310 secs! (til next ts)!
+
+== Iter  38 -sn= 238. sleeping for 0.003626 secs! (til next ts)!
+
+== Iter  39 -sn= 239. sleeping for 0.003654 secs! (til next ts)!
+
+== Iter  40 -sn= 240. sleeping for 0.003686 secs! (til next ts)!
+
+== Iter  41 -sn= 241. sleeping for 0.003565 secs! (til next ts)!
+
+== Iter  42 -sn= 242. sleeping for 0.003723 secs! (til next ts)!
+
+== Iter  43 -sn= 243. sleeping for 0.003650 secs! (til next ts)!
+
+== Iter  44 -sn= 244. sleeping for 0.003690 secs! (til next ts)!
+
+== Iter  45 -sn= 245. sleeping for 0.003625 secs! (til next ts)!
+
+== Iter  46 -sn= 246. sleeping for 0.003729 secs! (til next ts)!
+
+== Iter  47 -sn= 247. sleeping for 0.003560 secs! (til next ts)!
+
+== Iter  48 -sn= 248. sleeping for 0.003642 secs! (til next ts)!
+
+== Iter  49 -sn= 249. sleeping for 0.003656 secs! (til next ts)!
+
+== Iter  50 -sn= 250. sleeping for 0.003529 secs! (til next ts)!
+
+== Iter  51 -sn= 251. sleeping for 0.003778 secs! (til next ts)!
+
+== Iter  52 -sn= 252. sleeping for 0.003656 secs! (til next ts)!
+
+== Iter  53 -sn= 253. sleeping for 0.003716 secs! (til next ts)!
+
+== Iter  54 -sn= 254. sleeping for 0.003695 secs! (til next ts)!
+
+== Iter  55 -sn= 255. sleeping for 0.003659 secs! (til next ts)!
+
+== Iter  56 -sn= 256. sleeping for 0.003625 secs! (til next ts)!
+
+== Iter  57 -sn= 257. sleeping for 0.003654 secs! (til next ts)!
+
+== Iter  58 -sn= 258. sleeping for 0.003773 secs! (til next ts)!
+
+== Iter  59 -sn= 259. sleeping for 0.003607 secs! (til next ts)!
+
+== Iter  60 -sn= 260. sleeping for 0.003655 secs! (til next ts)!
+
+== Iter  61 -sn= 261. sleeping for 0.003649 secs! (til next ts)!
+
+== Iter  62 -sn= 262. sleeping for 0.003790 secs! (til next ts)!
+
+== Iter  63 -sn= 263. sleeping for 0.003781 secs! (til next ts)!
+
+== Iter  64 -sn= 264. sleeping for 0.003759 secs! (til next ts)!
+
+== Iter  65 -sn= 265. sleeping for 0.003783 secs! (til next ts)!
+
+== Iter  66 -sn= 266. sleeping for 0.003658 secs! (til next ts)!
+
+== Iter  67 -sn= 267. sleeping for 0.003772 secs! (til next ts)!
+
+== Iter  68 -sn= 268. sleeping for 0.003716 secs! (til next ts)!
+
+== Iter  69 -sn= 269. sleeping for 0.003819 secs! (til next ts)!
+
+== Iter  70 -sn= 270. sleeping for 0.003732 secs! (til next ts)!
+
+== Iter  71 -sn= 271. sleeping for 0.003777 secs! (til next ts)!
+
+== Iter  72 -sn= 272. sleeping for 0.003662 secs! (til next ts)!
+
+== Iter  73 -sn= 273. sleeping for 0.003692 secs! (til next ts)!
+
+== Iter  74 -sn= 274. sleeping for 0.003796 secs! (til next ts)!
+
+== Iter  75 -sn= 275. sleeping for 0.003736 secs! (til next ts)!
+
+== Iter  76 -sn= 276. sleeping for 0.003820 secs! (til next ts)!
+
+== Iter  77 -sn= 277. sleeping for 0.003736 secs! (til next ts)!
+
+== Iter  78 -sn= 278. sleeping for 0.003821 secs! (til next ts)!
+
+== Iter  79 -sn= 279. sleeping for 0.003752 secs! (til next ts)!
+
+== Iter  80 -sn= 280. sleeping for 0.003520 secs! (til next ts)!
+
+== Iter  81 -sn= 281. sleeping for 0.003636 secs! (til next ts)!
+
+== Iter  82 -sn= 282. sleeping for 0.004284 secs! (til next ts)!
+
+== Iter  83 -sn= 283. sleeping for 0.004314 secs! (til next ts)!
+
+== Iter  84 -sn= 284. sleeping for 0.004214 secs! (til next ts)!
+
+== Iter  85 -sn= 285. sleeping for 0.004310 secs! (til next ts)!
+
+== Iter  86 -sn= 286. sleeping for 0.004294 secs! (til next ts)!
+
+== Iter  87 -sn= 287. sleeping for 0.004413 secs! (til next ts)!
+
+== Iter  88 -sn= 288. sleeping for 0.004429 secs! (til next ts)!
+
+== Iter  89 -sn= 289. sleeping for 0.004448 secs! (til next ts)!
+
+== Iter  90 -sn= 290. sleeping for 0.004455 secs! (til next ts)!
+
+== Iter  91 -sn= 291. sleeping for 0.004455 secs! (til next ts)!
+
+== Iter  92 -sn= 292. sleeping for 0.004457 secs! (til next ts)!
+
+== Iter  93 -sn= 293. sleeping for 0.004453 secs! (til next ts)!
+
+== Iter  94 -sn= 294. sleeping for 0.004463 secs! (til next ts)!
+
+== Iter  95 -sn= 295. sleeping for 0.004435 secs! (til next ts)!
+
+== Iter  96 -sn= 296. sleeping for 0.004439 secs! (til next ts)!
+
+== Iter  97 -sn= 297. sleeping for 0.004432 secs! (til next ts)!
+
+== Iter  98 -sn= 298. sleeping for 0.004448 secs! (til next ts)!
+
+== Iter  99 -sn= 299. sleeping for 0.004452 secs! (til next ts)!
+
+== Iter 100 -sn= 300. sleeping for 0.004454 secs! (til next ts)!
+
+== Iter 101 -sn= 301. sleeping for 0.004454 secs! (til next ts)!
+
+== Iter 102 -sn= 302. sleeping for 0.004464 secs! (til next ts)!
+
+== Iter 103 -sn= 303. sleeping for 0.004457 secs! (til next ts)!
+
+== Iter 104 -sn= 304. sleeping for 0.004439 secs! (til next ts)!
+
+== Iter 105 -sn= 305. sleeping for 0.004456 secs! (til next ts)!
+
+== Iter 106 -sn= 306. sleeping for 0.004488 secs! (til next ts)!
+
+== Iter 107 -sn= 307. sleeping for 0.004458 secs! (til next ts)!
+
+== Iter 108 -sn= 308. sleeping for 0.004458 secs! (til next ts)!
+
+== Iter 109 -sn= 309. sleeping for 0.004423 secs! (til next ts)!
+
+== Iter 110 -sn= 310. sleeping for 0.004458 secs! (til next ts)!
+
+== Iter 111 -sn= 311. sleeping for 0.004465 secs! (til next ts)!
+
+== Iter 112 -sn= 312. sleeping for 0.004460 secs! (til next ts)!
+
+== Iter 113 -sn= 313. sleeping for 0.004394 secs! (til next ts)!
+
+== Iter 114 -sn= 314. sleeping for 0.004459 secs! (til next ts)!
+
+== Iter 115 -sn= 315. sleeping for 0.004417 secs! (til next ts)!
+
+== Iter 116 -sn= 316. sleeping for 0.004460 secs! (til next ts)!
+
+== Iter 117 -sn= 317. sleeping for 0.004416 secs! (til next ts)!
+
+== Iter 118 -sn= 318. sleeping for 0.004457 secs! (til next ts)!
+
+== Iter 119 -sn= 319. sleeping for 0.004443 secs! (til next ts)!
+
+== Iter 120 -sn= 320. sleeping for 0.004440 secs! (til next ts)!
+
+== Iter 121 -sn= 321. sleeping for 0.004461 secs! (til next ts)!
+
+== Iter 122 -sn= 322. sleeping for 0.004439 secs! (til next ts)!
+
+== Iter 123 -sn= 323. sleeping for 0.004460 secs! (til next ts)!
+
+== Iter 124 -sn= 324. sleeping for 0.004454 secs! (til next ts)!
+
+== Iter 125 -sn= 325. sleeping for 0.004461 secs! (til next ts)!
+
+== Iter 126 -sn= 326. sleeping for 0.004457 secs! (til next ts)!
+
+== Iter 127 -sn= 327. sleeping for 0.004459 secs! (til next ts)!
+
+== Iter 128 -sn= 328. sleeping for 0.004454 secs! (til next ts)!
+
+== Iter 129 -sn= 329. sleeping for 0.004443 secs! (til next ts)!
+
+== Iter 130 -sn= 330. sleeping for 0.004453 secs! (til next ts)!
+
+== Iter 131 -sn= 331. sleeping for 0.004460 secs! (til next ts)!
+
+== Iter 132 -sn= 332. sleeping for 0.004456 secs! (til next ts)!
+
+== Iter 133 -sn= 333. sleeping for 0.004461 secs! (til next ts)!
+
+== Iter 134 -sn= 334. sleeping for 0.004457 secs! (til next ts)!
+
+== Iter 135 -sn= 335. sleeping for 0.004464 secs! (til next ts)!
+
+== Iter 136 -sn= 336. sleeping for 0.004456 secs! (til next ts)!
+
+== Iter 137 -sn= 337. sleeping for 0.004461 secs! (til next ts)!
+
+== Iter 138 -sn= 338. sleeping for 0.004438 secs! (til next ts)!
+
+== Iter 139 -sn= 339. sleeping for 0.004458 secs! (til next ts)!
+
+== Iter 140 -sn= 340. sleeping for 0.004457 secs! (til next ts)!
+
+== Iter 141 -sn= 341. sleeping for 0.004458 secs! (til next ts)!
+
+== Iter 142 -sn= 342. sleeping for 0.004456 secs! (til next ts)!
+
+== Iter 143 -sn= 343. sleeping for 0.004460 secs! (til next ts)!
+
+== Iter 144 -sn= 344. sleeping for 0.004458 secs! (til next ts)!
+
+== Iter 145 -sn= 345. sleeping for 0.003740 secs! (til next ts)!
+
+== Iter 146 -sn= 346. sleeping for 0.003472 secs! (til next ts)!
+
+== Iter 147 -sn= 347. sleeping for 0.003832 secs! (til next ts)!
+
+== Iter 148 -sn= 348. sleeping for 0.003869 secs! (til next ts)!
+
+== Iter 149 -sn= 349. sleeping for 0.003877 secs! (til next ts)!
+
+== Iter 150 -sn= 350. sleeping for 0.003817 secs! (til next ts)!
+
+== Iter 151 -sn= 351. sleeping for 0.003881 secs! (til next ts)!
+
+== Iter 152 -sn= 352. sleeping for 0.003823 secs! (til next ts)!
+
+== Iter 153 -sn= 353. sleeping for 0.003874 secs! (til next ts)!
+
+== Iter 154 -sn= 354. sleeping for 0.003819 secs! (til next ts)!
+
+== Iter 155 -sn= 355. sleeping for 0.003874 secs! (til next ts)!
+
+== Iter 156 -sn= 356. sleeping for 0.003865 secs! (til next ts)!
+
+== Iter 157 -sn= 357. sleeping for 0.003830 secs! (til next ts)!
+
+== Iter 158 -sn= 358. sleeping for 0.003855 secs! (til next ts)!
+
+== Iter 159 -sn= 359. sleeping for 0.003827 secs! (til next ts)!
+
+== Iter 160 -sn= 360. sleeping for 0.003869 secs! (til next ts)!
+
+== Iter 161 -sn= 361. sleeping for 0.003825 secs! (til next ts)!
+
+== Iter 162 -sn= 362. sleeping for 0.003868 secs! (til next ts)!
+
+== Iter 163 -sn= 363. sleeping for 0.003871 secs! (til next ts)!
+
+== Iter 164 -sn= 364. sleeping for 0.003878 secs! (til next ts)!
+
+== Iter 165 -sn= 365. sleeping for 0.003831 secs! (til next ts)!
+
+== Iter 166 -sn= 366. sleeping for 0.003824 secs! (til next ts)!
+
+== Iter 167 -sn= 367. sleeping for 0.003884 secs! (til next ts)!
+
+== Iter 168 -sn= 368. sleeping for 0.003835 secs! (til next ts)!
+
+== Iter 169 -sn= 369. sleeping for 0.003874 secs! (til next ts)!
+
+== Iter 170 -sn= 370. sleeping for 0.003822 secs! (til next ts)!
+
+== Iter 171 -sn= 371. sleeping for 0.003875 secs! (til next ts)!
+
+== Iter 172 -sn= 372. sleeping for 0.003926 secs! (til next ts)!
+
+== Iter 173 -sn= 373. sleeping for 0.003871 secs! (til next ts)!
+
+== Iter 174 -sn= 374. sleeping for 0.003871 secs! (til next ts)!
+
+== Iter 175 -sn= 375. sleeping for 0.003823 secs! (til next ts)!
+
+== Iter 176 -sn= 376. sleeping for 0.003877 secs! (til next ts)!
+
+== Iter 177 -sn= 377. sleeping for 0.003829 secs! (til next ts)!
+
+== Iter 178 -sn= 378. sleeping for 0.003883 secs! (til next ts)!
+
+== Iter 179 -sn= 379. sleeping for 0.003835 secs! (til next ts)!
+
+== Iter 180 -sn= 380. sleeping for 0.003888 secs! (til next ts)!
+
+== Iter 181 -sn= 381. sleeping for 0.003878 secs! (til next ts)!
+
+== Iter 182 -sn= 382. sleeping for 0.003837 secs! (til next ts)!
+
+== Iter 183 -sn= 383. sleeping for 0.003884 secs! (til next ts)!
+
+== Iter 184 -sn= 384. sleeping for 0.003815 secs! (til next ts)!
+
+== Iter 185 -sn= 385. sleeping for 0.003876 secs! (til next ts)!
+
+== Iter 186 -sn= 386. sleeping for 0.003768 secs! (til next ts)!
+
+== Iter 187 -sn= 387. sleeping for 0.003876 secs! (til next ts)!
+
+== Iter 188 -sn= 388. sleeping for 0.003745 secs! (til next ts)!
+
+== Iter 189 -sn= 389. sleeping for 0.003880 secs! (til next ts)!
+
+== Iter 190 -sn= 390. sleeping for 0.003697 secs! (til next ts)!
+
+== Iter 191 -sn= 391. sleeping for 0.003826 secs! (til next ts)!
+
+== Iter 192 -sn= 392. sleeping for 0.003751 secs! (til next ts)!
+
+== Iter 193 -sn= 393. sleeping for 0.003822 secs! (til next ts)!
+
+== Iter 194 -sn= 394. sleeping for 0.003750 secs! (til next ts)!
+
+== Iter 195 -sn= 395. sleeping for 0.003829 secs! (til next ts)!
+
+== Iter 196 -sn= 396. sleeping for 0.003753 secs! (til next ts)!
+
+== Iter 197 -sn= 397. sleeping for 0.003928 secs! (til next ts)!
+
+== Iter 198 -sn= 398. sleeping for 0.003876 secs! (til next ts)!
+
+== Iter 199 -sn= 399. sleeping for 0.003745 secs! (til next ts)!
+
+== Iter 200 -sn= 400. sleeping for 0.003838 secs! (til next ts)!
+
+== Iter 201 -sn= 401. sleeping for 0.003652 secs! (til next ts)!
+
+== Iter 202 -sn= 402. sleeping for 0.003810 secs! (til next ts)!
+
+== Iter 203 -sn= 403. sleeping for 0.003851 secs! (til next ts)!
+
+== Iter 204 -sn= 404. sleeping for 0.003830 secs! (til next ts)!
+
+== Iter 205 -sn= 405. sleeping for 0.003860 secs! (til next ts)!
+
+== Iter 206 -sn= 406. sleeping for 0.003887 secs! (til next ts)!
+
+== Iter 207 -sn= 407. sleeping for 0.003700 secs! (til next ts)!
+
+== Iter 208 -sn= 408. sleeping for 0.003871 secs! (til next ts)!
+
+== Iter 209 -sn= 409. sleeping for 0.003811 secs! (til next ts)!
+
+== Iter 210 -sn= 410. sleeping for 0.003869 secs! (til next ts)!
+
+== Iter 211 -sn= 411. sleeping for 0.003813 secs! (til next ts)!
+
+== Iter 212 -sn= 412. sleeping for 0.003896 secs! (til next ts)!
+
+== Iter 213 -sn= 413. sleeping for 0.003850 secs! (til next ts)!
+
+== Iter 214 -sn= 414. sleeping for 0.003878 secs! (til next ts)!
+
+== Iter 215 -sn= 415. sleeping for 0.003821 secs! (til next ts)!
+
+== Iter 216 -sn= 416. sleeping for 0.003838 secs! (til next ts)!
+
+== Iter 217 -sn= 417. sleeping for 0.003860 secs! (til next ts)!
+
+== Iter 218 -sn= 418. sleeping for 0.003828 secs! (til next ts)!
+
+== Iter 219 -sn= 419. sleeping for 0.003870 secs! (til next ts)!
+
+== Iter 220 -sn= 420. sleeping for 0.003824 secs! (til next ts)!
+
+== Iter 221 -sn= 421. sleeping for 0.003869 secs! (til next ts)!
+
+== Iter 222 -sn= 422. sleeping for 0.003829 secs! (til next ts)!
+
+== Iter 223 -sn= 423. sleeping for 0.003870 secs! (til next ts)!
+
+== Iter 224 -sn= 424. sleeping for 0.003886 secs! (til next ts)!
+
+== Iter 225 -sn= 425. sleeping for 0.003821 secs! (til next ts)!
+
+== Iter 226 -sn= 426. sleeping for 0.003879 secs! (til next ts)!
+
+== Iter 227 -sn= 427. sleeping for 0.003831 secs! (til next ts)!
+
+== Iter 228 -sn= 428. sleeping for 0.003885 secs! (til next ts)!
+
+== Iter 229 -sn= 429. sleeping for 0.003828 secs! (til next ts)!
+
+== Iter 230 -sn= 430. sleeping for 0.003882 secs! (til next ts)!
+
+== Iter 231 -sn= 431. sleeping for 0.003881 secs! (til next ts)!
+
+== Iter 232 -sn= 432. sleeping for 0.003833 secs! (til next ts)!
+
+== Iter 233 -sn= 433. sleeping for 0.003869 secs! (til next ts)!
+
+== Iter 234 -sn= 434. sleeping for 0.003825 secs! (til next ts)!
+
+== Iter 235 -sn= 435. sleeping for 0.003877 secs! (til next ts)!
+
+== Iter 236 -sn= 436. sleeping for 0.003824 secs! (til next ts)!
+
+== Iter 237 -sn= 437. sleeping for 0.003882 secs! (til next ts)!
+
+== Iter 238 -sn= 438. sleeping for 0.003877 secs! (til next ts)!
+
+== Iter 239 -sn= 439. sleeping for 0.003888 secs! (til next ts)!
+
+== Iter 240 -sn= 440. sleeping for 0.003828 secs! (til next ts)!
+
+== Iter 241 -sn= 441. sleeping for 0.003833 secs! (til next ts)!
+
+== Iter 242 -sn= 442. sleeping for 0.003883 secs! (til next ts)!
+
+== Iter 243 -sn= 443. sleeping for 0.003839 secs! (til next ts)!
+
+== Iter 244 -sn= 444. sleeping for 0.003885 secs! (til next ts)!
+
+== Iter 245 -sn= 445. sleeping for 0.003725 secs! (til next ts)!
+
+== Iter 246 -sn= 446. sleeping for 0.003880 secs! (til next ts)!
+
+== Iter 247 -sn= 447. sleeping for 0.003799 secs! (til next ts)!
+
+== Iter 248 -sn= 448. sleeping for 0.003874 secs! (til next ts)!
+
+== Iter 249 -sn= 449. sleeping for 0.003742 secs! (til next ts)!
+
+== Iter 250 -sn= 450. sleeping for 0.003821 secs! (til next ts)!
+
+== Iter 251 -sn= 451. sleeping for 0.003739 secs! (til next ts)!
+
+== Iter 252 -sn= 452. sleeping for 0.003827 secs! (til next ts)!
+
+== Iter 253 -sn= 453. sleeping for 0.003743 secs! (til next ts)!
+
+== Iter 254 -sn= 454. sleeping for 0.003830 secs! (til next ts)!
+
+== Iter 255 -sn= 455. sleeping for 0.003738 secs! (til next ts)!
+
+== Iter 256 -sn= 456. sleeping for 0.003873 secs! (til next ts)!
+
+== Iter 257 -sn= 457. sleeping for 0.003694 secs! (til next ts)!
+
+== Iter 258 -sn= 458. sleeping for 0.003878 secs! (til next ts)!
+
+== Iter 259 -sn= 459. sleeping for 0.003832 secs! (til next ts)!
+
+== Iter 260 -sn= 460. sleeping for 0.003830 secs! (til next ts)!
+
+== Iter 261 -sn= 461. sleeping for 0.003824 secs! (til next ts)!
+
+== Iter 262 -sn= 462. sleeping for 0.003866 secs! (til next ts)!
+
+== Iter 263 -sn= 463. sleeping for 0.003880 secs! (til next ts)!
+
+== Iter 264 -sn= 464. sleeping for 0.003826 secs! (til next ts)!
+
+== Iter 265 -sn= 465. sleeping for 0.003875 secs! (til next ts)!
+
+== Iter 266 -sn= 466. sleeping for 0.003818 secs! (til next ts)!
+
+== Iter 267 -sn= 467. sleeping for 0.003876 secs! (til next ts)!
+
+== Iter 268 -sn= 468. sleeping for 0.003713 secs! (til next ts)!
+
+== Iter 269 -sn= 469. sleeping for 0.003869 secs! (til next ts)!
+
+== Iter 270 -sn= 470. sleeping for 0.003817 secs! (til next ts)!
+
+== Iter 271 -sn= 471. sleeping for 0.003878 secs! (til next ts)!
+
+== Iter 272 -sn= 472. sleeping for 0.003820 secs! (til next ts)!
+
+== Iter 273 -sn= 473. sleeping for 0.003872 secs! (til next ts)!
+
+== Iter 274 -sn= 474. sleeping for 0.003870 secs! (til next ts)!
+
+== Iter 275 -sn= 475. sleeping for 0.003826 secs! (til next ts)!
+
+== Iter 276 -sn= 476. sleeping for 0.003868 secs! (til next ts)!
+
+== Iter 277 -sn= 477. sleeping for 0.003826 secs! (til next ts)!
+
+== Iter 278 -sn= 478. sleeping for 0.003871 secs! (til next ts)!
+
+== Iter 279 -sn= 479. sleeping for 0.003830 secs! (til next ts)!
+
+== Iter 280 -sn= 480. sleeping for 0.003876 secs! (til next ts)!
+
+== Iter 281 -sn= 481. sleeping for 0.003867 secs! (til next ts)!
+
+== Iter 282 -sn= 482. sleeping for 0.003814 secs! (til next ts)!
+
+== Iter 283 -sn= 483. sleeping for 0.003873 secs! (til next ts)!
+
+== Iter 284 -sn= 484. sleeping for 0.003817 secs! (til next ts)!
+
+== Iter 285 -sn= 485. sleeping for 0.003873 secs! (til next ts)!
+
+== Iter 286 -sn= 486. sleeping for 0.003827 secs! (til next ts)!
+
+== Iter 287 -sn= 487. sleeping for 0.003877 secs! (til next ts)!
+
+== Iter 288 -sn= 488. sleeping for 0.003874 secs! (til next ts)!
+
+== Iter 289 -sn= 489. sleeping for 0.003877 secs! (til next ts)!
+
+== Iter 290 -sn= 490. sleeping for 0.003828 secs! (til next ts)!
+
+== Iter 291 -sn= 491. sleeping for 0.003829 secs! (til next ts)!
+
+== Iter 292 -sn= 492. sleeping for 0.003876 secs! (til next ts)!
+
+== Iter 293 -sn= 493. sleeping for 0.003825 secs! (til next ts)!
+
+== Iter 294 -sn= 494. sleeping for 0.003869 secs! (til next ts)!
+
+== Iter 295 -sn= 495. sleeping for 0.003227 secs! (til next ts)!
+
+== Iter 296 -sn= 496. sleeping for 0.003880 secs! (til next ts)!
+
+== Iter 297 -sn= 497. sleeping for 0.003812 secs! (til next ts)!
+
+== Iter 298 -sn= 498. sleeping for 0.003863 secs! (til next ts)!
+
+== Iter 299 -sn= 499. sleeping for 0.003871 secs! (til next ts)!
+
+== Iter 300 -sn= 500. sleeping for 0.003819 secs! (til next ts)!
+
+== Iter 301 -sn= 501. sleeping for 0.003870 secs! (til next ts)!
+
+== Iter 302 -sn= 502. sleeping for 0.003834 secs! (til next ts)!
+
+== Iter 303 -sn= 503. sleeping for 0.003869 secs! (til next ts)!
+
+== Iter 304 -sn= 504. sleeping for 0.003774 secs! (til next ts)!
+
+== Iter 305 -sn= 505. sleeping for 0.003872 secs! (til next ts)!
+
+== Iter 306 -sn= 506. sleeping for 0.003786 secs! (til next ts)!
+
+== Iter 307 -sn= 507. sleeping for 0.003824 secs! (til next ts)!
+
+== Iter 308 -sn= 508. sleeping for 0.003751 secs! (til next ts)!
+
+== Iter 309 -sn= 509. sleeping for 0.003817 secs! (til next ts)!
+
+== Iter 310 -sn= 510. sleeping for 0.003736 secs! (til next ts)!
+
+== Iter 311 -sn= 511. sleeping for 0.003822 secs! (til next ts)!
+
+== Iter 312 -sn= 512. sleeping for 0.003746 secs! (til next ts)!
+
+== Iter 313 -sn= 513. sleeping for 0.003860 secs! (til next ts)!
+
+== Iter 314 -sn= 514. sleeping for 0.003687 secs! (til next ts)!
+
+== Iter 315 -sn= 515. sleeping for 0.003865 secs! (til next ts)!
+
+== Iter 316 -sn= 516. sleeping for 0.003688 secs! (til next ts)!
+
+== Iter 317 -sn= 517. sleeping for 0.003869 secs! (til next ts)!
+
+== Iter 318 -sn= 518. sleeping for 0.003730 secs! (til next ts)!
+
+== Iter 319 -sn= 519. sleeping for 0.003857 secs! (til next ts)!
+
+== Iter 320 -sn= 520. sleeping for 0.003818 secs! (til next ts)!
+
+== Iter 321 -sn= 521. sleeping for 0.003857 secs! (til next ts)!
+
+== Iter 322 -sn= 522. sleeping for 0.003828 secs! (til next ts)!
+
+== Iter 323 -sn= 523. sleeping for 0.003878 secs! (til next ts)!
+
+== Iter 324 -sn= 524. sleeping for 0.003880 secs! (til next ts)!
+
+== Iter 325 -sn= 525. sleeping for 0.003808 secs! (til next ts)!
+
+== Iter 326 -sn= 526. sleeping for 0.003873 secs! (til next ts)!
+
+== Iter 327 -sn= 527. sleeping for 0.003812 secs! (til next ts)!
+
+== Iter 328 -sn= 528. sleeping for 0.003878 secs! (til next ts)!
+
+== Iter 329 -sn= 529. sleeping for 0.003715 secs! (til next ts)!
+
+== Iter 330 -sn= 530. sleeping for 0.003863 secs! (til next ts)!
+
+== Iter 331 -sn= 531. sleeping for 0.003853 secs! (til next ts)!
+
+== Iter 332 -sn= 532. sleeping for 0.003817 secs! (til next ts)!
+
+== Iter 333 -sn= 533. sleeping for 0.003855 secs! (til next ts)!
+
+== Iter 334 -sn= 534. sleeping for 0.003817 secs! (til next ts)!
+
+== Iter 335 -sn= 535. sleeping for 0.003859 secs! (til next ts)!
+
+== Iter 336 -sn= 536. sleeping for 0.003800 secs! (til next ts)!
+
+== Iter 337 -sn= 537. sleeping for 0.003862 secs! (til next ts)!
+
+== Iter 338 -sn= 538. sleeping for 0.003867 secs! (til next ts)!
+
+== Iter 339 -sn= 539. sleeping for 0.003823 secs! (til next ts)!
+
+== Iter 340 -sn= 540. sleeping for 0.003871 secs! (til next ts)!
+
+== Iter 341 -sn= 541. sleeping for 0.003811 secs! (til next ts)!
+
+== Iter 342 -sn= 542. sleeping for 0.003878 secs! (til next ts)!
+
+== Iter 343 -sn= 543. sleeping for 0.003817 secs! (til next ts)!
+
+== Iter 344 -sn= 544. sleeping for 0.003877 secs! (til next ts)!
+
+== Iter 345 -sn= 545. sleeping for 0.003814 secs! (til next ts)!
+
+== Iter 346 -sn= 546. sleeping for 0.003864 secs! (til next ts)!
+
+== Iter 347 -sn= 547. sleeping for 0.003878 secs! (til next ts)!
+
+== Iter 348 -sn= 548. sleeping for 0.003863 secs! (til next ts)!
+
+== Iter 349 -sn= 549. sleeping for 0.003863 secs! (til next ts)!
+
+== Iter 350 -sn= 550. sleeping for 0.003817 secs! (til next ts)!
+
+== Iter 351 -sn= 551. sleeping for 0.003864 secs! (til next ts)!
+
+== Iter 352 -sn= 552. sleeping for 0.003819 secs! (til next ts)!
+
+== Iter 353 -sn= 553. sleeping for 0.003865 secs! (til next ts)!
+
+== Iter 354 -sn= 554. sleeping for 0.003823 secs! (til next ts)!
+
+== Iter 355 -sn= 555. sleeping for 0.003875 secs! (til next ts)!
+
+== Iter 356 -sn= 556. sleeping for 0.003871 secs! (til next ts)!
+
+== Iter 357 -sn= 557. sleeping for 0.003822 secs! (til next ts)!
+
+== Iter 358 -sn= 558. sleeping for 0.003868 secs! (til next ts)!
+
+== Iter 359 -sn= 559. sleeping for 0.003826 secs! (til next ts)!
+
+== Iter 360 -sn= 560. sleeping for 0.003876 secs! (til next ts)!
+
+== Iter 361 -sn= 561. sleeping for 0.003822 secs! (til next ts)!
+
+== Iter 362 -sn= 562. sleeping for 0.003866 secs! (til next ts)!
+
+== Iter 363 -sn= 563. sleeping for 0.003855 secs! (til next ts)!
+
+== Iter 364 -sn= 564. sleeping for 0.003890 secs! (til next ts)!
+
+== Iter 365 -sn= 565. sleeping for 0.003756 secs! (til next ts)!
+
+== Iter 366 -sn= 566. sleeping for 0.003820 secs! (til next ts)!
+
+== Iter 367 -sn= 567. sleeping for 0.003776 secs! (til next ts)!
+
+== Iter 368 -sn= 568. sleeping for 0.003819 secs! (til next ts)!
+
+== Iter 369 -sn= 569. sleeping for 0.003734 secs! (til next ts)!
+
+== Iter 370 -sn= 570. sleeping for 0.003821 secs! (til next ts)!
+
+== Iter 371 -sn= 571. sleeping for 0.003744 secs! (til next ts)!
+
+== Iter 372 -sn= 572. sleeping for 0.003825 secs! (til next ts)!
+
+== Iter 373 -sn= 573. sleeping for 0.003684 secs! (til next ts)!
+
+== Iter 374 -sn= 574. sleeping for 0.003871 secs! (til next ts)!
+
+== Iter 375 -sn= 575. sleeping for 0.003711 secs! (til next ts)!
+
+== Iter 376 -sn= 576. sleeping for 0.003877 secs! (til next ts)!
+
+== Iter 377 -sn= 577. sleeping for 0.003681 secs! (til next ts)!
+
+== Iter 378 -sn= 578. sleeping for 0.003867 secs! (til next ts)!
+
+== Iter 379 -sn= 579. sleeping for 0.003731 secs! (til next ts)!
+
+== Iter 380 -sn= 580. sleeping for 0.003865 secs! (til next ts)!
+
+== Iter 381 -sn= 581. sleeping for 0.003882 secs! (til next ts)!
+
+== Iter 382 -sn= 582. sleeping for 0.003811 secs! (til next ts)!
+
+== Iter 383 -sn= 583. sleeping for 0.003882 secs! (til next ts)!
+
+== Iter 384 -sn= 584. sleeping for 0.003812 secs! (til next ts)!
+
+== Iter 385 --sn= 586. sleeping for 0.004764 secs! (til next ts)!
+
+== Iter 386 ------sn= 592. sleeping for 0.003876 secs! (til next ts)!
+
+== Iter 387 --------------------------------------sn= 630. sleeping for 0.000215 secs! (til next ts)!
+
+== Iter 388 ---------------------------------sn= 663. sleeping for 0.000867 secs! (til next ts)!
+
+== Iter 389 -------------sn= 676. sleeping for 0.004305 secs! (til next ts)!
+
+== Iter 390 -------------------sn= 695. sleeping for 0.001159 secs! (til next ts)!
+
+== Iter 391 ---------sn= 704. sleeping for 0.001194 secs! (til next ts)!
+
+== Iter 392 ------sn= 710. sleeping for 0.002066 secs! (til next ts)!
+
+== Iter 393 -------sn= 717. sleeping for 0.003930 secs! (til next ts)!
+
+== Iter 394 --------sn= 725. sleeping for 0.004633 secs! (til next ts)!
+
+== Iter 395 ------sn= 731. sleeping for 0.000336 secs! (til next ts)!
+
+== Iter 396 -----sn= 736. sleeping for 0.000993 secs! (til next ts)!
+
+== Iter 397 -------sn= 743. sleeping for 0.000747 secs! (til next ts)!
+
+== Iter 398 -------sn= 750. sleeping for 0.003774 secs! (til next ts)!
+
+== Iter 399 --------sn= 758. sleeping for 0.002524 secs! (til next ts)!
+
+== Iter 400 ------sn= 764. sleeping for 0.003227 secs! (til next ts)!
+
+== Iter 401 ----sn= 768. sleeping for 0.001975 secs! (til next ts)!
+
+== Iter 402 ------sn= 774. sleeping for 0.004430 secs! (til next ts)!
+
+== Iter 403 --------sn= 782. sleeping for 0.001664 secs! (til next ts)!
+
+== Iter 404 -------sn= 789. sleeping for 0.003690 secs! (til next ts)!
+
+== Iter 405 -------sn= 796. sleeping for 0.000509 secs! (til next ts)!
+
+== Iter 406 ----------------------------------sn= 830. sleeping for 0.001338 secs! (til next ts)!
+
+== Iter 407 ----------------------------sn= 858. sleeping for 0.004392 secs! (til next ts)!
+
+== Iter 408 ---------------------sn= 879. sleeping for 0.003225 secs! (til next ts)!
+
+== Iter 409 --------------sn= 893. sleeping for 0.003773 secs! (til next ts)!
+
+== Iter 410 --------------sn= 907. sleeping for 0.002366 secs! (til next ts)!
+
+== Iter 411 -------------sn= 920. sleeping for 0.002914 secs! (til next ts)!
+
+== Iter 412 -------------sn= 933. sleeping for 0.002367 secs! (til next ts)!
+
+== Iter 413 ------------sn= 945. sleeping for 0.000959 secs! (til next ts)!
+
+== Iter 414 -------------sn= 958. sleeping for 0.001508 secs! (til next ts)!
+
+== Iter 415 -------------sn= 971. sleeping for 0.003563 secs! (til next ts)!
+
+== Iter 416 -------------sn= 984. sleeping for 0.003689 secs! (til next ts)!
+
+== Iter 417 -------------sn= 997. sleeping for 0.002990 secs! (til next ts)!
+
+== Iter 418 -----------------------sn=1020. sleeping for 0.004690 secs! (til next ts)!
+
+== Iter 419 -----------------------------------------------------sn=1073. sleeping for 0.001044 secs! (til next ts)!
+
+== Iter 420 ---------------------------------sn=1106. sleeping for 0.003069 secs! (til next ts)!
+
+== Iter 421 --------------------sn=1126. sleeping for 0.004319 secs! (til next ts)!
+
+== Iter 422 --------------------sn=1146. sleeping for 0.000804 secs! (til next ts)!
+
+== Iter 423 -------------------sn=1165. sleeping for 0.000101 secs! (til next ts)!
+
+== Iter 424 --------------------sn=1185. sleeping for 0.001976 secs! (til next ts)!
+
+== Iter 425 ------------------------------------sn=1221. sleeping for 0.003441 secs! (til next ts)!
+
+== Iter 426 ------------------------------------sn=1257. sleeping for 0.004763 secs! (til next ts)!
+
+== Iter 427 --------------------------------------------------sn=1307. sleeping for 0.004628 secs! (til next ts)!
+
+== Iter 428 ------------------------sn=1331. sleeping for 0.002291 secs! (til next ts)!
+
+== Iter 429 ---------------------sn=1352. sleeping for 0.004553 secs! (til next ts)!
+
+== Iter 430 --------------------sn=1372. sleeping for 0.001897 secs! (til next ts)!
+
+== Iter 431 --------------------sn=1392. sleeping for 0.004570 secs! (til next ts)!
+
+== Iter 432 ---------------------------sn=1419. sleeping for 0.002320 secs! (til next ts)!
+
+== Iter 433 ---------------------------sn=1446. sleeping for 0.000569 secs! (til next ts)!
+
+== Iter 434 ------------------------------------sn=1482. sleeping for 0.004779 secs! (til next ts)!
+
+== Iter 435 --------------------------------------------sn=1526. sleeping for 0.000973 secs! (til next ts)!
+
+== Iter 436 ------------------------sn=1550. sleeping for 0.001272 secs! (til next ts)!
+
+== Iter 437 --------------------sn=1570. sleeping for 0.001663 secs! (til next ts)!
+
+== Iter 438 --------------------sn=1590. sleeping for 0.003500 secs! (til next ts)!
+
+== Iter 439 --------------------sn=1610. sleeping for 0.002885 secs! (til next ts)!
+
+== Iter 440 ---------------------------sn=1637. sleeping for 0.001243 secs! (til next ts)!
+
+== Iter 441 -------------------------------------sn=1674. sleeping for 0.000739 secs! (til next ts)!
+
+== Iter 442 --------------------------------------------------sn=1724. sleeping for 0.000326 secs! (til next ts)!
+
+== Iter 443 ----------------------------------------sn=1764. sleeping for 0.000334 secs! (til next ts)!
+
+== Iter 444 ----------------------sn=1786. sleeping for 0.000725 secs! (til next ts)!
+
+== Iter 445 --------------------sn=1806. sleeping for 0.003065 secs! (til next ts)!
+
+== Iter 446 ----------------------sn=1828. sleeping for 0.004077 secs! (til next ts)!
+
+== Iter 447 --------------------------sn=1854. sleeping for 0.003930 secs! (til next ts)!
+
+== Iter 448 ------------------------------------sn=1890. sleeping for 0.000414 secs! (til next ts)!
+
+== Iter 449 -------------------------------------------------sn=1939. sleeping for 0.000639 secs! (til next ts)!
+
+== Iter 450 ------------------------------------sn=1975. sleeping for 0.001161 secs! (til next ts)!
+
+== Iter 451 ----------------------sn=1997. sleeping for 0.000330 secs! (til next ts)!
+
+== Iter 452 ---------------------sn=2018. sleeping for 0.000569 secs! (til next ts)!
+
+== Iter 453 --------------------sn=2038. sleeping for 0.001820 secs! (til next ts)!
+
+== Iter 454 -------------------sn=2057. sleeping for 0.000690 secs! (til next ts)!
+
+== Iter 455 ------------------------------sn=2087. sleeping for 0.002676 secs! (til next ts)!
+
+== Iter 456 --------------------sn=2107. sleeping for 0.002366 secs! (til next ts)!
+
+== Iter 457 --------------sn=2121. sleeping for 0.002053 secs! (til next ts)!
+
+== Iter 458 ------------sn=2133. sleeping for 0.004210 secs! (til next ts)!
+
+== Iter 459 --------------sn=2147. sleeping for 0.000098 secs! (til next ts)!
+
+== Iter 460 ------------sn=2159. sleeping for 0.000648 secs! (til next ts)!
+
+== Iter 461 -------------sn=2172. sleeping for 0.002643 secs! (til next ts)!
+
+== Iter 462 -------------sn=2185. sleeping for 0.004789 secs! (til next ts)!
+
+== Iter 463 --------------sn=2199. sleeping for 0.002259 secs! (til next ts)!
+
+== Iter 464 -------------sn=2212. sleeping for 0.003373 secs! (til next ts)!
+
+== Iter 465 ---------------------------sn=2239. sleeping for 0.000696 secs! (til next ts)!
+
+== Iter 466 ---------------sn=2254. sleeping for 0.002992 secs! (til next ts)!
+
+== Iter 467 -------------sn=2267. sleeping for 0.001479 secs! (til next ts)!
+
+== Iter 468 Iter 468. Last sample num 2282 + fwd-horiz T 20 > MAX_SAMPLES 2300, so we're done.

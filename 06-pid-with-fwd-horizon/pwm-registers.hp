@@ -1,0 +1,130 @@
+// https://raw.githubusercontent.com/zedoul/rtdm-pwmss/master/rtdm-pwm/mf2044-pwm-drv.c
+
+#define SYSCLK 100000000
+
+#define CM_PER_BASE 0x44e00000
+#define CM_PER_SZ 0x44e03fff-CM_PER_BASE
+#define EPWMSS1_CLK_CTRL 0xcc
+#define EPWMSS0_CLK_CTRL 0xd4
+#define EPWMSS2_CLK_CTRL 0xd8
+
+#define EPWM1_0_BASE 0x48302200
+#define EPWM1_1_BASE 0x48302260
+#define EPWM0_0_BASE 0x48300200
+#define EPWM0_1_BASE 0x48300260
+#define EPWM2_0_BASE 0x48304200
+#define EPWM2_1_BASE 0x48304260
+
+#define EPWM_SZ 0x5f
+
+#define TBCNT 0x8
+#define CMPAHR 0x10
+
+/* EHRPWM registers and bits definitions */
+/* Time base module registers */
+#define TBCTL			0x00
+#define TBPRD			0x0A
+#define TBPHS			0x06
+
+// #define BIT(bit) (1 << (bit)) // arg, not allowed in pasm?
+// 
+// #define TBCTL_RUN_MASK		(BIT(15) | BIT(14))
+// #define TBCTL_STOP_NEXT		0
+// #define TBCTL_STOP_ON_CYCLE	BIT(14)
+// #define TBCTL_FREE_RUN		(BIT(15) | BIT(14))
+// #define TBCTL_PRDLD_MASK	BIT(3)
+// #define TBCTL_PRDLD_SHDW	0
+// #define TBCTL_PRDLD_IMDT	BIT(3)
+// #define TBCTL_CLKDIV_MASK	(BIT(12) | BIT(11) | BIT(10) | BIT(9) | \
+// 				BIT(8) | BIT(7))
+// #define TBCTL_CTRMODE_MASK	(BIT(1) | BIT(0))
+// #define TBCTL_CTRMODE_UP	0
+// #define TBCTL_CTRMODE_DOWN	BIT(0)
+// #define TBCTL_CTRMODE_UPDOWN	BIT(1)
+// #define TBCTL_CTRMODE_FREEZE	(BIT(1) | BIT(0))
+// 
+#define TBCTL_HSPCLKDIV_SHIFT	7
+#define TBCTL_CLKDIV_SHIFT	10
+
+#define CLKDIV_MAX		7
+#define HSPCLKDIV_MAX		7
+#define PERIOD_MAX		0xFFFF
+
+/* compare module registers */
+#define CMPA			0x12
+#define CMPB			0x14
+
+// CMPCTL register (2 bytes)
+#define CMPCTL			0xE
+
+/* Action qualifier module registers */
+#define AQCTLA			0x16
+#define AQCTLB			0x18
+#define AQSFRC			0x1A
+#define AQCSFRC			0x1C
+
+// #define AQCTL_CBU_MASK		(BIT(9) | BIT(8))
+// #define AQCTL_CBU_FRCLOW	BIT(8)
+// #define AQCTL_CBU_FRCHIGH	BIT(9)
+// #define AQCTL_CBU_FRCTOGGLE	(BIT(9) | BIT(8))
+// #define AQCTL_CAU_MASK		(BIT(5) | BIT(4))
+// #define AQCTL_CAU_FRCLOW	BIT(4)
+// #define AQCTL_CAU_FRCHIGH	BIT(5)
+// #define AQCTL_CAU_FRCTOGGLE	(BIT(5) | BIT(4))
+// #define AQCTL_PRD_MASK		(BIT(3) | BIT(2))
+// #define AQCTL_PRD_FRCLOW	BIT(2)
+// #define AQCTL_PRD_FRCHIGH	BIT(3)
+// #define AQCTL_PRD_FRCTOGGLE	(BIT(3) | BIT(2))
+// #define AQCTL_ZRO_MASK		(BIT(1) | BIT(0))
+// #define AQCTL_ZRO_FRCLOW	BIT(0)
+// #define AQCTL_ZRO_FRCHIGH	BIT(1)
+// #define AQCTL_ZRO_FRCTOGGLE	(BIT(1) | BIT(0))
+// 
+// #define AQCTL_CHANA_POLNORMAL	(AQCTL_CAU_FRCLOW | AQCTL_PRD_FRCHIGH | \
+// 				AQCTL_ZRO_FRCHIGH)
+// #define AQCTL_CHANA_POLINVERSED	(AQCTL_CAU_FRCHIGH | AQCTL_PRD_FRCLOW | \
+// 				AQCTL_ZRO_FRCLOW)
+// #define AQCTL_CHANB_POLNORMAL	(AQCTL_CBU_FRCLOW | AQCTL_PRD_FRCHIGH | \
+// 				AQCTL_ZRO_FRCHIGH)
+// #define AQCTL_CHANB_POLINVERSED	(AQCTL_CBU_FRCHIGH | AQCTL_PRD_FRCLOW | \
+// 				AQCTL_ZRO_FRCLOW)
+// 
+// #define AQSFRC_RLDCSF_MASK	(BIT(7) | BIT(6))
+// #define AQSFRC_RLDCSF_ZRO	0
+// #define AQSFRC_RLDCSF_PRD	BIT(6)
+// #define AQSFRC_RLDCSF_ZROPRD	BIT(7)
+// #define AQSFRC_RLDCSF_IMDT	(BIT(7) | BIT(6))
+// 
+// #define AQCSFRC_CSFB_MASK	(BIT(3) | BIT(2))
+// #define AQCSFRC_CSFB_FRCDIS	0
+// #define AQCSFRC_CSFB_FRCLOW	BIT(2)
+// #define AQCSFRC_CSFB_FRCHIGH	BIT(3)
+// #define AQCSFRC_CSFB_DISSWFRC	(BIT(3) | BIT(2))
+// #define AQCSFRC_CSFA_MASK	(BIT(1) | BIT(0))
+// #define AQCSFRC_CSFA_FRCDIS	0
+// #define AQCSFRC_CSFA_FRCLOW	BIT(0)
+// #define AQCSFRC_CSFA_FRCHIGH	BIT(1)
+// #define AQCSFRC_CSFA_DISSWFRC	(BIT(1) | BIT(0))
+// 
+// #define NUM_PWM_CHANNEL		2	/* EHRPWM channels */
+// 
+// #define MF2044_PWM_1_0 (1<<4) //P9.14
+// #define MF2044_PWM_1_1 (1<<5) //P9.16
+// #define MF2044_PWM_0_0 (1<<6) //P9.22
+// #define MF2044_PWM_0_1 (1<<7) //P9.21
+// #define MF2044_PWM_2_0 (1<<8) //P8.19
+// #define MF2044_PWM_2_1 (1<<9) //P8.13
+// 
+// #define MF2044_IOCTL_MAGIC 0x00
+// #define MF2044_IOCTL_ON _IO(MF2044_IOCTL_MAGIC, 1)
+// #define MF2044_IOCTL_OFF _IO(MF2044_IOCTL_MAGIC, 2)
+// #define MF2044_IOCTL_GET_DUTY_CYCLE _IO(MF2044_IOCTL_MAGIC, 3)
+// #define MF2044_IOCTL_SET_DUTY_CYCLE _IO(MF2044_IOCTL_MAGIC, 4)
+// #define MF2044_IOCTL_GET_FREQUENCY _IO(MF2044_IOCTL_MAGIC, 5)
+// #define MF2044_IOCTL_SET_FREQUENCY _IO(MF2044_IOCTL_MAGIC, 6)
+
+#define FREQ_INIT 0
+#define DUTY_INIT 0
+
+
+

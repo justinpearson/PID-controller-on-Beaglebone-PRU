@@ -1,0 +1,28 @@
+#include <stdio.h>
+#include <errno.h> // for strerror(errno)
+// #include <fcntl.h> // flags for 'open', eg O_WRONLY, O_SYNC, etc
+#include <string.h> // for strerror also?
+#include <math.h> // fabs, M_PI
+#include <stdlib.h> // exit,  EXIT_FAILURE
+#include <unistd.h> // usleep, pread
+
+int main() {
+
+  for( int i=0; i<10; i++ ) {
+    double x = 0;
+    printf("i=%d,x=%lf\n",i,x);
+    x += i;
+    printf("i=%d,x=%lf\n",i,x);
+  }
+
+  printf("loop2\n");
+
+ for( int i=0; i<10; i++ ) {
+   double x = i;
+   printf("i=%d,x=%lf\n",i,x);
+  }
+
+
+
+  return 0;
+}

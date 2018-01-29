@@ -1,0 +1,184 @@
+#ifndef JPPPRULIB_HP
+#define JPPPRULIB_HP
+
+
+// # pru memory layout
+// This file is shared btwn CPU .c code and PRU .p code.
+// So don't put any C- or pasm-specific code in here, like 
+// variable declarations.
+//
+// 1-word ctrl regs
+//
+// - 'cpu wants data' 0x0 - 0x3
+// - 'pru data ready' 0x4 - 0x7
+// - 'cpu new sched'  0x8 - 0xB
+// - 'pru ack sched'  0xC - 0xF
+//
+//
+// data packet: 8 words = 32 byets = 0x20 bytes
+//
+// - cycle count
+// - sample num
+// - adc value
+// - eqep value
+// - gpios written @ this time
+// - duty written @ this time
+// - reserved
+// - reserved
+//
+// 32 data pkts in a data buffer = 1024 bytes = 0x400 bytes
+//
+// cmd pkt: 4 words = 16 bytes = 0x10 bytes
+//
+// - cycle count
+// - sample num
+// - gpio states
+// - duty cycle
+//
+// 32 cmd pkts in a cmd buffer = 512 bytes = 0x200 bytes
+//
+// 4 buffers:
+//
+// - cpu-data-buf: 0x010 - 0x40F  0x400 bytes
+//     - when CPU asks, it gets the sensor data in here
+// - pru-data-buf: 0x410 - 0x80F  0x400 bytes
+//     - PRU continuously puts adc, eqep, and gpio vals in here (5ms)
+// - cpu-cmd-buf:  0x810 - 0xA0F  0x200 bytes
+//     - CPU puts its intended actuation sch in here
+// - pru-cmd-buf:  0xA10 - 0xC0F  0x200 bytes
+//     - what PRU works from when setting gpio & duty
+	
+// Indices into pkts
+#define IDATA_CYCLE_COUNT      0
+#define IDATA_SAMPLE_NUM       1
+#define IDATA_ADC 2
+#define IDATA_EQEP 3
+#define IDATA_GPIO 4
+#define IDATA_DUTY 5
+#define IDATA_RESERVED1 6
+#define IDATA_RESERVED2 7
+
+#define ICMD_CYCLE_COUNT 0
+#define ICMD_SAMPLE_NUM 1
+#define ICMD_GPIO 2
+#define ICMD_DUTY 3
+
+
+
+// Misc
+#define PRU0_ARM_INTERRUPT 	19
+// Note: sample_period defaults to 1000000 (5ms / timestep),
+//  and can be set with void set_PRU_sample_period(unsigned int period)
+// Um, except it's broken I think.
+#define PRU_TICKS_PER_SAMPLE   		1000000 // pick one from below:
+// #define SAMPLE_PERIOD 		1000000 // 5   ms. in cycles. 5ms = 1e6 cycles bc 200MHz => 5ns/cyc
+// #define SAMPLE_PERIOD 		 160000 // 0.8 ms
+// #define SAMPLE_PERIOD 		3200000 // 16  ms
+// #define SAMPLE_PERIOD 		4600000 // 23  ms
+// #define SAMPLE_PERIOD 		2400000 // 12  ms
+// #define SAMPLE_PERIOD       		4000000 // 20  ms
+// #define SAMPLE_PERIOD       		2000000 // 10  ms
+#define MAX_MOTOR_VOLTAGE (6) 	
+#define _100MHZ_TICKS_PER_PWM_PERIOD (3333) // 3333 ticks of 100MHz sysclock => 30kHz period
+#define PRU_TICKS_PER_SEC (200000000) // 200MHz PRU clock
+#define MAX_U32 (0xffffffff)
+#define USEC_PER_SEC (1000000)
+
+	
+#define CYCLE_COUNTER_RESET_VALUE (MAX_U32 - PRU_TICKS_PER_SEC) // reset the cycle counter if you're within a second of overrunning.
+#define MAGIC_SAMPLE_NUM_ALWAYS_EXECUTE          (0xffffffff)
+#define MAGIC_SAMPLE_NUM_ALWAYS_EXECUTE_ONCE	 (0xfffffffe)
+	
+// BB Victor's jpppru DTO configures r30 of the PRU to have these certain pins (used for GPIO for motor driver direction):
+#define PIN_STBY 0
+#define PIN_AIN1 1
+#define PIN_AIN2 2
+#define PIN_PWM  5
+#define LOW      0
+#define HIGH     1
+
+#define GPIO_MASK  ((HIGH << PIN_STBY) | (HIGH << PIN_AIN1) | (HIGH << PIN_AIN2) | (HIGH << PIN_PWM))
+
+// Here are the four main values we can set the GPIOs to in order to drive the motor
+// (According to the motor driver)
+#define GPIO_STBY  ((LOW  << PIN_STBY) | (LOW  << PIN_AIN1) | (LOW  << PIN_AIN2) | (LOW  << PIN_PWM))
+#define GPIO_BRAKE ((HIGH << PIN_STBY) | (LOW  << PIN_AIN1) | (HIGH << PIN_AIN2) | (LOW  << PIN_PWM))
+#define GPIO_CW    ((HIGH << PIN_STBY) | (HIGH << PIN_AIN1) | (LOW  << PIN_AIN2) | (HIGH << PIN_PWM))
+#define GPIO_CCW   ((HIGH << PIN_STBY) | (LOW  << PIN_AIN1) | (HIGH << PIN_AIN2) | (HIGH << PIN_PWM))
+
+
+	
+#define INITIAL_REG_VALUE 	0 // 0x22222222	
+//#define GPIO_MASK 		0b00100111  // bits 0,1,2,5 : DTO hooks these in r30 to pins like P9_27	
+#define NOT_GPIO_MASK   	0b11011000
+#define BYTES_PER_INT		4	
+#define BYTES_PER_DATA_RAM      0x00002000
+#define ADDR_PRU0_DATA_RAM      0x00000000
+	
+// Our buffers
+
+#define ADDR_CPU_PRU_CTRL_REG   0
+#define OFST_CPU_WANTS_DATA     0  // 1
+#define OFST_PRU_DATA_READY     4  // 2
+#define OFST_CPU_NEW_SCHED      8  // 3
+#define OFST_PRU_ACK_SCHED      12 // 4
+#define OFST_CPU_NEW_PERIOD     16 // 5
+#define OFST_SAMPLE_PERIOD_CMD  20 // 6
+#define OFST_SAMPLE_NUM_LOCK    24 // 7
+#define OFST_SAMPLE_NUM         28 // 8
+#define OFST_CYCLE_COUNT_REQ    32 // 9
+#define OFST_CYCLE_COUNT        36 // 10
+#define NUM_CTRL_REGS		10  // <-- MUST MATCH num of OFST regs above
+#define INTS_PER_CTRL_REG       1 // just use a u32 for each one, even tho we use only 1 bit. Easier for concurrency issues.
+#define BYTES_PER_CTRL_REG	(BYTES_PER_INT * INTS_PER_CTRL_REG)
+#define BYTES_IN_CPU_PRU_CTRL_REG     (BYTES_PER_CTRL_REG * NUM_CTRL_REGS)
+#define INTS_IN_CPU_PRU_CTRL_REG      (INTS_PER_CTRL_REG * NUM_CTRL_REGS)
+
+
+#define PKTS_PER_DATA_BUFFER    32
+#define PKTS_PER_CMD_BUFFER     32
+#define INTS_PER_DATA_PKT       8
+#define INTS_PER_CMD_PKT        4
+#define BYTES_PER_DATA_PKT       (INTS_PER_DATA_PKT*BYTES_PER_INT)
+#define BYTES_PER_CMD_PKT        (INTS_PER_CMD_PKT*BYTES_PER_INT)
+
+#define BYTES_PER_DATA_BUFFER    (BYTES_PER_INT * INTS_PER_DATA_PKT * PKTS_PER_DATA_BUFFER   )
+#define BYTES_PER_CMD_BUFFER     (BYTES_PER_INT * INTS_PER_CMD_PKT  * PKTS_PER_CMD_BUFFER    )
+#define INTS_PER_DATA_BUFFER    ( INTS_PER_DATA_PKT * PKTS_PER_DATA_BUFFER   )
+#define INTS_PER_CMD_BUFFER     ( INTS_PER_CMD_PKT  * PKTS_PER_CMD_BUFFER    )
+
+//#define PKTS_PER_REQ_TIME_LOG       32
+//#define INTS_PER_REQ_TIME_LOG_PKT   3 // total # requests, cyc count @ time of request, current sample num @ time of request
+	
+#define ADDR_CPU_DATA_BUF       (ADDR_CPU_PRU_CTRL_REG + BYTES_IN_CPU_PRU_CTRL_REG   )
+#define ADDR_PRU_DATA_BUF       (ADDR_CPU_DATA_BUF     + BYTES_PER_DATA_BUFFER       )
+#define ADDR_CPU_CMD_BUF        (ADDR_PRU_DATA_BUF     + BYTES_PER_DATA_BUFFER       )
+#define ADDR_PRU_CMD_BUF        (ADDR_CPU_CMD_BUF      + BYTES_PER_CMD_BUFFER        )
+//#define ADDR_REQ_TIME_LOG       (ADDR_PRU_CMD_BUF      + BYTES_PER_CMD_BUFFER        )
+
+// ADC addresses
+#define ADDR_ADC      		0x44e0d000
+#define ADDR_FIFO0DATA   	(ADDR_ADC + 0x0100)
+#define OFFSET_CTRL         	0x0040
+#define OFFSET_ADCSTAT      	0x0044
+#define OFFSET_ADC_CLKDIV   	0x004c
+#define OFFSET_STEPENABLE   	0x0054
+#define OFFSET_STEPCONFIG1  	0x0064
+#define OFFSET_STEPDELAY1   	0x0068
+#define OFFSET_FIFO0COUNT   	0x00e4
+
+
+// EQEP addresses
+#define ADDR_EQEP1      0x48302180
+#define QPOSCNT    	0x0000 // eQEP register offsets from its base IO address
+#define QPOSINIT   	0x0004
+	// ... see NL's code for more
+
+
+// GPIO addresses
+// No #defines needed:
+// Reg r30 bits 0,1,2,5 are hooked up to P9_31,29,30,27
+
+
+
+#endif // header guard
